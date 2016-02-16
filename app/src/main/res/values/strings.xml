@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">רשימת קניות משותפת</string>
+    <string name="action_settings">הגדרות</string>
+    <string name="title_activity_login">הרשמה או התחברות</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">שם מזהה רשימה</string>
+    <string name="prompt_password">סיסמה</string>
+    <string name="action_sign_in">הרשמה \ התחברות</string>
+    <string name="action_sign_in_short">הרשמה</string>
+    <string name="error_invalid_email">אנא הכנס שם מזהה תקין- מעל 4 תווים עם סיפרה אחת לפחות</string>
+    <string name="error_invalid_password">סיסמה קצרה מדיי- נדרש מעל 4 תווים</string>
+    <string name="error_incorrect_password">סיסמה איננה נכונה</string>
+    <string name="error_field_required">שדה זה חובה</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="item_name">שם המוצר</string>
+    <string name="quantity">כמות</string>
+    <string name="new_item">שמור פריט חדש</string>
+    <string name="save">שמור</string>
+    <string name="cancel">ביטול</string>
+    <string name="title_activity_new_item">NewItemActivity</string>
+    <string name="tip">שם מזהה הרשימה והסיסמה ישותפו יחד עם כל השותפים לרשימה</string>
+    <string name="im_shopping">אני בקניות!</string>
+    <string name="tell_friend">ספר לחבר!</string>
+    <string name="share_list">שתף רשימה!</string>
+    <string name="tell_friend_text">היי! אני התחלתי להשתמש באפליקציה ממש מגניבה!  אפשר לשתף איתה רשימת קניות עם חברים או משפחה ולעדכן את הקבוצה מתי אני עושה קניות! יש יותר מגניב מזה? נסה בעצמך</string>
+    <string name="share_list_text">היי! התחלתי להשתמש ברשימה משותפת! בוא להיות איתי ברשימה! שם מזהה רשימה:</string>
+    <string name="share_list_text2">סיסמה:</string>
+    <string name="share_list_text3">ההורדה והרשמה פשוטה ומהירה:</string>
+    <string name="error_already_signed">שגיאה, משתמש קיים. סיסמה לא תואמת.</string>
+    <string name="error_no_connection">אין חיבור לרשת</string>
+    <string name="logoff_btn">התנתק</string>
+    <string name="accept">אישור</string>
+    <string name="confirm_logoff">האם ברצונך להתנתק מהרשימה?</string>
+</resources>

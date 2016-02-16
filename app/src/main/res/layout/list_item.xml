@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:weightSum="9"
+           >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/delete_button"
+        android:src="@android:drawable/ic_delete"
+
+
+        android:layout_weight="1"
+
+       android:layout_marginRight="10px"
+
+        />
+
+
+
+        <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="item_name"
+        android:id="@+id/item_name"
+        android:hint="@string/item_name"
+
+        android:layout_marginRight="86dp"
+        android:layout_marginEnd="86dp"
+
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:paddingRight="10px"
+            android:cursorVisible="true"
+            android:inputType="textShortMessage"
+            android:singleLine="true"
+
+
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="0"
+
+        android:digits="0123456789"
+        android:inputType="numberDecimal"
+        android:layout_weight="3"
+        android:id="@+id/item_quantity"
+
+        android:maxEms="2"
+        android:singleLine="true"
+        android:paddingRight="30px"
+       />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/save_button"
+        android:src="@mipmap/ic_save"
+
+
+
+        android:layout_weight="1"/>
+        </TableRow>
+
+
+
+</RelativeLayout>

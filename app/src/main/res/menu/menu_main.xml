@@ -1,0 +1,36 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.ido.simpleshopping.MainActivity" >
+
+    <item android:id="@+id/send_im_shopping"
+        android:title="@string/im_shopping"
+        android:orderInCategory="100"
+        app:showAsAction="always" />
+
+
+    <item android:id="@+id/tell_friend_button"
+        android:title="@string/tell_friend"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item android:id="@+id/share_list_button"
+        android:title="@string/share_list"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:icon="@mipmap/ic_white_share"/>
+    <item android:id="@+id/share_list_button2"
+        android:title="@string/share_list"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        />
+    <item android:id="@+id/loggoff_butn"
+        android:title="@string/logoff_btn"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+</menu>
