@@ -11,37 +11,37 @@
 
 
 
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:weightSum="9"
-           >
-
-    <ImageView
+    <TableRow
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/delete_button"
-        android:src="@android:drawable/ic_delete"
+        android:layout_height="match_parent"
+        android:weightSum="9"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/delete_button"
+            android:src="@android:drawable/ic_delete"
 
 
-        android:layout_weight="1"
+            android:layout_weight="1"
 
-       android:layout_marginRight="10px"
+            android:layout_marginRight="10px"
 
-        />
+            />
 
 
 
         <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="item_name"
-        android:id="@+id/item_name"
-        android:hint="@string/item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="item_name"
+            android:id="@+id/item_name"
+            android:hint="@string/item_name"
 
-        android:layout_marginRight="86dp"
-        android:layout_marginEnd="86dp"
+            android:layout_marginRight="86dp"
+            android:layout_marginEnd="86dp"
 
             android:focusable="true"
             android:focusableInTouchMode="true"
@@ -51,34 +51,34 @@
             android:singleLine="true"
 
 
-        />
+            />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="0"
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="0"
 
-        android:digits="0123456789"
-        android:inputType="numberDecimal"
-        android:layout_weight="3"
-        android:id="@+id/item_quantity"
+            android:digits="0123456789"
+            android:inputType="numberDecimal"
+            android:layout_weight="3"
+            android:id="@+id/item_quantity"
 
-        android:maxEms="2"
-        android:singleLine="true"
-        android:paddingRight="30px"
-       />
+            android:maxEms="2"
+            android:singleLine="true"
+            android:paddingRight="30px"
+            />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/save_button"
-        android:src="@mipmap/ic_save"
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/save_button"
+            android:src="@mipmap/ic_save"
 
 
 
-        android:layout_weight="1"/>
-        </TableRow>
+            android:layout_weight="1"/>
+    </TableRow>
 
 
 

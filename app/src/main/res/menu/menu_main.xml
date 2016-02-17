@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.ido.simpleshopping.MainActivity" >
+    tools:context="com.medroid.sharedshopping.MainActivity" >
 
     <item android:id="@+id/send_im_shopping"
         android:title="@string/im_shopping"

@@ -6,22 +6,22 @@
 
 
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/item_name"
-            android:layout_weight="1"
-            android:hint="@string/item_name"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_name"
+        android:layout_weight="1"
+        android:hint="@string/item_name"/>
 
 
 
-        <EditText
-            android:layout_width="86dp"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
-            android:id="@+id/quantity"
-            android:text="0"
-            android:hint="@string/quantity" />
+    <EditText
+        android:layout_width="86dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/quantity"
+        android:text="0"
+        android:hint="@string/quantity" />
 
 </LinearLayout>
