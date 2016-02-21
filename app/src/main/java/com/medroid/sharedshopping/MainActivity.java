@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -35,13 +38,18 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SendCallback;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+
     ListView listview = null;
     ItemsAdapter itemsAdapter = null;
-    ParseUser user = null;
+
+    Group user_group = null;
+    User current_user =null;
+
     LayoutInflater inflater = null;
     AppCompatActivity activity = null;
     AlertDialog alert= null;
@@ -51,7 +59,12 @@ public class MainActivity extends AppCompatActivity {
 
     AlertDialog errordialog = null;
 
+
+
+
     private AnalyticsTrackers analyticsTrackers;
+
+    private ArrayAdapter<String> arrayAdapter= null;
 
     private Tracker mTracker;
     private static final String TAG = "MainActivity";
@@ -72,27 +85,52 @@ public class MainActivity extends AppCompatActivity {
         activity= this;
         progress= new ProgressDialog(this);
         progress.setTitle("טוען");
-        if (isNetworkAvailable() == false )
-        {
-            AlertDialog.Builder builder = new AlertDialog.Builder (MainActivity.this);
-            builder.setIcon(R.mipmap.ic_error);
-            builder.setTitle("warning");
-            builder.setMessage(getResources().getString(R.string.error_no_connection))
-                    .setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialog) {
-                            if (isNetworkAvailable())
-                                errordialog.dismiss();
-                            else
-                                errordialog.show();
+
+
+/*
+        version control
+        ParseQuery<ParseObject> getApplicationversion = ParseQuery.getQuery("ApplicationVersion");
+        getApplicationversion.addDescendingOrder("updatedAt");
+        getApplicationversion.getFirstInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject object, ParseException e) {
+                if (e== null){
+                    ApplicationVersion current_version =ApplicationVersion.getCurrentVersion(getApplicationContext());
+                    ApplicationVersion cloud_version = new ApplicationVersion(object);
+                    if ( current_version == null) //version 1.0
+                    {
+
+                    }
+                    else{
+
+                        if (current_version.version.compareTo(cloud_version.version) ==0 ){
+                            //same version
+
+                        }else{
+                            //not same version
+                            AlertDialog.Builder builder = new AlertDialog.Builder (MainActivity.this);
+
+
+
+                            builder.setTitle(getResources().getString(R.string.app_name));
+                            builder.setTitle(getResources().getString(R.string.app_name))
+                                    .setMessage("עבודות תחזוקה מיד נשוב עם גירסה עדכנית")
+                                    .setIcon(R.mipmap.ic_error);
+
+
+                            builder.create()
+                            .show ();
+
                         }
-                    });
+                    }
+                   ApplicationVersion.setCurrentApplication(;
 
-            errordialog = builder.create();
-            errordialog.show();
+                }
+            }
+        });
+*/
 
 
-        }
 
         ParseQuery<ParseObject> geturl= ParseQuery.getQuery("ApplicationUrl");
         geturl.getFirstInBackground(new GetCallback<ParseObject>() {
@@ -126,9 +164,10 @@ public class MainActivity extends AppCompatActivity {
 
                 final  AlertDialog.Builder builder = new AlertDialog.Builder (MainActivity.this);
                 View newItemView = inflater.inflate(R.layout.new_item_alert,null);
-                EditText name = (EditText)newItemView.findViewById(R.id.item_name);
+                AutoCompleteTextView name = (AutoCompleteTextView)newItemView.findViewById(R.id.item_name);
                 EditText  quantity= (EditText)newItemView.findViewById(R.id.quantity);
-
+                if (arrayAdapter!= null)
+                name.setAdapter(arrayAdapter);
                 builder.setTitle(getResources().getString(R.string.app_name));
                 builder.setTitle(getResources().getString(R.string.app_name))
                         .setMessage(getResources().getString(R.string.new_item))
@@ -158,6 +197,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+      user_group = Group.getCurrentGroup(getApplicationContext());
+        if (user_group== null)
+        {
+            //todo not registered
+        }
+
+
+
+
+
 
 
 
@@ -171,11 +220,9 @@ public class MainActivity extends AppCompatActivity {
         mTracker.setScreenName("Image~" + "Main Activity");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
-        user = ParseUser.getCurrentUser();
 
-        if (!isNetworkAvailable())
-        {
-            AlertDialog.Builder builder = new AlertDialog.Builder (MainActivity.this);
+        if (!isNetworkAvailable()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setIcon(R.mipmap.ic_error);
             builder.setTitle("warning");
             builder.setMessage(getResources().getString(R.string.error_no_connection))
@@ -193,49 +240,84 @@ public class MainActivity extends AppCompatActivity {
             errordialog.show();
 
             return;
-        }
-        else{
-            try{
-                //TODO why its empty
-            }catch(Exception e){
-                errordialog.dismiss();
+        } else {
+            user_group = Group.getCurrentGroup(getApplicationContext());
+            current_user = User.getCurrentUser(getApplicationContext());
+
+
+
+            if (user_group == null) //no signed
+            {
+                startActivity(new Intent(this, LoginActivity.class));
+                return;
             }
+            if (current_user == null) {
+                //no user
+            }
+
+            toolbar.setTitle(user_group.getGroup_name());
+
+
+            toolbar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+                    builder.setTitle(getResources().getString(R.string.app_name))
+                            .setMessage(getResources().getString(R.string.prompt_email) + ":" + user_group.getGroup_name() + "\n" +
+                                    getResources().getString(R.string.prompt_password) + ":" + user_group.getPassword());
+                    builder.create().show();
+                }
+            });
+            setSupportActionBar(toolbar);
+
+            itemsAdapter.clear();
+            progress.show();
+            getItemsfromCloud();
+            getoldItemsForAdapter();
         }
-        if (user == null) //no signed
-        {
-            startActivity(new Intent(this, LoginActivity.class));
-            return;
-        }
+    }
+    public void getoldItemsForAdapter(){
+        ParseQuery<ParseObject> query= ParseQuery.getQuery(Item.NAME_OF_TABLE);
+        query.whereEqualTo(Item.GROUP, user_group.generateWithoutData());
 
-        toolbar.setTitle(user.getUsername());
-
-
-        toolbar.setOnClickListener(new View.OnClickListener() {
+        query.findInBackground(new FindCallback<ParseObject>() {
             @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder (MainActivity.this);
+            public void done(List<ParseObject> objects, ParseException e) {
+                if (e== null){
+                    ArrayList<String> list= new ArrayList<String>();
+                    for (ParseObject item : objects){
+                        Item item2= new Item(item);
+                        list.add(item2.getName());
+                    }
+                    arrayAdapter= new ArrayAdapter<String>(getApplicationContext(),
+                            R.layout.dropdown_item_name ,list); 
 
-                builder.setTitle(getResources().getString(R.string.app_name))
-                        .setMessage(getResources().getString(R.string.prompt_email)+":"+user.getUsername()+"\n"+
-                                getResources().getString(R.string.prompt_password)+":"+user.getString("pass"));
-                builder.create().show ();
+
+                }else{
+
+                }
+
             }
         });
-        setSupportActionBar(toolbar);
-
-        itemsAdapter.clear();
-        progress.show();
+    }
+    public void getItemsfromCloud(){
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery(Item.NAME_OF_TABLE);
-        query.whereEqualTo("user", user);
+        query.whereEqualTo(Item.GROUP, user_group.generateWithoutData());
+        query.whereEqualTo(Item.DELETED,false);
         query.orderByDescending("updatedAt");
+
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
                 if (e == null) {
                     for (ParseObject object : objects) {
                         Item item = new Item(object);
-                        itemsAdapter.add(item);
+                        item.getCreator_user(new getItemCreator(item));
+
+                       // itemsAdapter.add(item);
+
                     }
                     progress.dismiss();
                 } else {
@@ -244,7 +326,19 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    class getItemCreator implements CallbackParse{
+        Item item =null;
 
+        public getItemCreator(Item item) {
+            this.item = item;
+        }
+
+        @Override
+        public void callback(Parseable parseable) {
+            item.setCreator_user((User) parseable);
+            itemsAdapter.add(item);
+        }
     }
 
     @Override
@@ -279,9 +373,9 @@ public class MainActivity extends AppCompatActivity {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
             sendIntent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.share_list_text)+"\n"+
-                    user.getUsername()+"\n"+
+                    user_group.getGroup_name()+"\n"+
                     getResources().getString(R.string.share_list_text2)+"\n"+
-                    user.get("pass")
+                    user_group.getPassword()
                     +"\n"+
                     getResources().getString(R.string.share_list_text3)+"\n"+
                     MyApplication.MyUrl);
@@ -345,15 +439,10 @@ public class MainActivity extends AppCompatActivity {
             builder.setPositiveButton(getResources().getString(R.string.logoff_btn), new DialogInterface.OnClickListener(){
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    ParseUser.logOutInBackground(new LogOutCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            if (e== null){
-                                Toast.makeText(getApplication(),"Logout successfull", Toast.LENGTH_LONG).show();
-                                onResume();
-                            }
-                        }
-                    });
+                    Group.setCurrentGroup(null,getApplicationContext());
+                    User.setCurrentUser(null, getApplicationContext());
+                    onResume();
+
                 }
             });
             builder.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -375,11 +464,12 @@ public class MainActivity extends AppCompatActivity {
 
     class saveNewItem implements DialogInterface.OnClickListener{
         Context context = null;
-        Item item= new Item("",0);
-        EditText name = null;
+
+        Item item= new Item("", 0 , current_user, false, user_group);
+        AutoCompleteTextView name = null;
         EditText  quantity= null;
 
-        public saveNewItem(EditText quantity, EditText name, Context context) {
+        public saveNewItem(EditText quantity, AutoCompleteTextView name, Context context) {
             this.quantity = quantity;
             this.name = name;
             this.context = context;

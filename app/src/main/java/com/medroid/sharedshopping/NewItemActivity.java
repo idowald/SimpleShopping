@@ -9,19 +9,36 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
+//not in use
 public class NewItemActivity extends AppCompatActivity {
     EditText name = null;
     EditText quantity= null;
     Button savebutton= null;
     Button cancelbutton= null;
-    Item newItem = new Item("",0);
+
+    User current_user =null;
+    Item newItem = null;
+    Group group= null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_item);
 
+        User.getCurrentUser(new CallbackParse() {
+            @Override
+            public void callback(Parseable parseable) {
+                current_user= (User) parseable;
+                current_user.getGroup(new CallbackParse() {
+                    @Override
+                    public void callback(Parseable parseable) {
+                        group = (Group) parseable;
+                        newItem =  new Item("",0,current_user,false,group);
+                    }
+                });
+
+            }
+        });
 
 
 

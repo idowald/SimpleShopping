@@ -6,9 +6,8 @@
     <!-- Strings related to login -->
     <string name="prompt_email">שם מזהה רשימה</string>
     <string name="prompt_password">סיסמה</string>
-    <string name="action_sign_in">הרשמה \ התחברות</string>
     <string name="action_sign_in_short">הרשמה</string>
-    <string name="error_invalid_email">אנא הכנס שם מזהה תקין- מעל 4 תווים עם סיפרה אחת לפחות</string>
+    <string name="error_invalid_email">אנא הכנס שם מזהה תקין- מעל 4 תווים בלי רווחים</string>
     <string name="error_invalid_password">סיסמה קצרה מדיי- נדרש מעל 4 תווים</string>
     <string name="error_incorrect_password">סיסמה איננה נכונה</string>
     <string name="error_field_required">שדה זה חובה</string>
@@ -34,4 +33,10 @@
     <string name="logoff_btn">התנתק</string>
     <string name="accept">אישור</string>
     <string name="confirm_logoff">האם ברצונך להתנתק מהרשימה?</string>
+    <string name="action_sign_in">כניסה לרשימה קיימת</string>
+    <string name="action_sign_in2">יצירת רשימה חדשה</string>
+    <string name="present_string">עשינו מעט שינויים, מהו שמך הפרטי?</string>
+    <string name="application_key">myApplicationkey</string>
+    <string name="first_name">שם פרטי</string>
+    <string name="error_list_taken">שגיאה, רשימה כבר קיימת. בחר שם אחר</string>
 </resources>
