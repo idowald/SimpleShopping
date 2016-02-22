@@ -30,8 +30,8 @@ public class User  extends Parseable{
         this.first_name = first_name;
         this.group = group;
     }
-    public User(ParseObject parseObject, CallbackParse callbackParse){
-        parseObject.fetchIfNeededInBackground( new getParseable(this,callbackParse));
+    public User(ParseObject parseObject, CallbackParse calli){
+        parseObject.fetchIfNeededInBackground( new getParseable(this,calli));
 
     }
 

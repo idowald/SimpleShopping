@@ -40,6 +40,7 @@ import com.parse.SendCallback;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -273,10 +274,16 @@ public class MainActivity extends AppCompatActivity {
 
             itemsAdapter.clear();
             progress.show();
+
+
+
             getItemsfromCloud();
             getoldItemsForAdapter();
+
+
         }
     }
+
     public void getoldItemsForAdapter(){
         ParseQuery<ParseObject> query= ParseQuery.getQuery(Item.NAME_OF_TABLE);
         query.whereEqualTo(Item.GROUP, user_group.generateWithoutData());
@@ -285,13 +292,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
                 if (e== null){
-                    ArrayList<String> list= new ArrayList<String>();
+                    TreeSet<String> list= new TreeSet<String>();
                     for (ParseObject item : objects){
                         Item item2= new Item(item);
                         list.add(item2.getName());
                     }
+
                     arrayAdapter= new ArrayAdapter<String>(getApplicationContext(),
-                            R.layout.dropdown_item_name ,list); 
+                            R.layout.dropdown_item_name ,(new ArrayList(list)));
 
 
                 }else{
@@ -319,7 +327,7 @@ public class MainActivity extends AppCompatActivity {
                        // itemsAdapter.add(item);
 
                     }
-                    progress.dismiss();
+
                 } else {
 
                     Toast.makeText(getApplicationContext(), "error, not connected", Toast.LENGTH_LONG).show();
@@ -338,6 +346,7 @@ public class MainActivity extends AppCompatActivity {
         public void callback(Parseable parseable) {
             item.setCreator_user((User) parseable);
             itemsAdapter.add(item);
+            progress.dismiss();
         }
     }
 
